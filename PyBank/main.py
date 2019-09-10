@@ -18,7 +18,11 @@ with open(csvpath) as csvfile:
         total_profit.append(int(row[1]))
 #append the monthly profit change  
     for p in range(len(total_profit)):
-        monthly_change.append(total_profit[p] - total_profit[p-1])
+        if p == 0:
+            monthly_change.append(0)
+        else:
+            x = total_profit[p] - total_profit[p-1]
+            monthly_change.append(x)
 #print(monthly_change)
 
 #obtain the max/min of monthly profit change/correlate to right month 
@@ -33,8 +37,8 @@ print("--------------------")
 print(f"Total Months: {len(total_months)}")
 print(f"Total: ${sum(total_profit)}")
 print(f"Average Change: {round(sum(monthly_change)/len(monthly_change), 2)}")
-print(f"Greatest Increase in Profits: {total_months[max_change]} (${(str(max_value))})")
-print(f"Greatest Decrease in Profits: {total_months[min_change]} (${(str(min_value))})")
+print(f"Greatest Increase in Profits: {total_months[max_change]} (${max_value})")
+print(f"Greatest Decrease in Profits: {total_months[min_change]} (${min_value})")
 
 #output it into .csv file
 output_path = os.path.join("fin_results.csv")
@@ -50,8 +54,8 @@ with open(output_path,"w") as file:
     file.write("\n")
     file.write(f"Average Change: {round(sum(monthly_change)/len(monthly_change),2)}")
     file.write("\n")
-    file.write(f"Greatest Increase in Profits: {total_months[max_change]} (${(str(max_value))})")
+    file.write(f"Greatest Increase in Profits: {total_months[max_change]} (${max_value})")
     file.write("\n")
-    file.write(f"Greatest Decrease in Profits: {total_months[min_change]} (${(str(min_value))})")
+    file.write(f"Greatest Decrease in Profits: {total_months[min_change]} (${min_value})")
 
 
